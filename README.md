@@ -3,13 +3,13 @@
  * @Author: Weize
  * @Date: 2021-04-22 09:04:17
  * @LastEditors: Weize
- * @LastEditTime: 2021-05-08 23:05:25
+ * @LastEditTime: 2021-05-08 23:06:38
 -->
 
 [![npm]][npm-url]
 [![node]][node-url]
 
-# webpack-vue-element-template
+# template-vue-cli-pc
 
 > 基于 vue-cli、element-ui 实现的一套开箱即用的 PC 框架
 
