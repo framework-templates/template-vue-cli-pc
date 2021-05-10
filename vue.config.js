@@ -3,7 +3,7 @@
  * @Author: Weize
  * @Date: 2021-05-08 21:06:51
  * @LastEditors: Weize
- * @LastEditTime: 2021-05-08 23:03:56
+ * @LastEditTime: 2021-05-10 21:08:35
  */
 
 const path = require("path");
@@ -11,11 +11,21 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 const portfinder = require("portfinder");
+const isProduction = process.env.NODE_ENV === "production";
+const externals = isProduction
+  ? {
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      vuex: "Vuex",
+      axios: "axios", 
+    }
+  : {};
+
 module.exports = {
   publicPath: "./",
   outputDir: "dist",
   assetsDir: "static",
-  lintOnSave: process.env.NODE_ENV === "development",
+  lintOnSave: !isProduction,
   productionSourceMap: false,
   devServer: {
     port: 8080,
@@ -50,20 +60,9 @@ module.exports = {
       },
       extensions: [".js", ".json", ".vue", ".css", ".less"],
     },
+    externals
   },
   chainWebpack(config) {
-    // config.plugin('preload').tap(() => [
-    //   {
-    //     rel: 'preload',
-    //     fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
-    //     include: 'initial'
-    //   }
-    // ])
-
-    // // when there are many pages, it will cause too many meaningless requests
-    // config.plugins.delete('prefetch')
-
-    // set svg-sprite-loader
     config.module
       .rule("svg")
       .exclude.add(resolve("src/icons"))
@@ -80,7 +79,7 @@ module.exports = {
       })
       .end();
 
-    config.when(process.env.NODE_ENV !== "development", (config) => {
+    config.when(isProduction, (config) => {
       config.optimization.splitChunks({
         chunks: "all",
         cacheGroups: {

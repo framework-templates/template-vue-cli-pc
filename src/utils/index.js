@@ -3,7 +3,7 @@
  * @Author: Weize
  * @Date: 2021-04-27 14:43:52
  * @LastEditors: Weize
- * @LastEditTime: 2021-05-08 21:41:36
+ * @LastEditTime: 2021-05-10 21:03:26
  */
 /**
  * Parse the time to string
@@ -11,7 +11,7 @@
  * @param {string} cFormat
  * @returns {string | null}
  */
-exports.parseTime = (time, cFormat) => {
+ export function parseTime(time, cFormat) {
   if (arguments.length === 0 || !time) {
     return null;
   }
@@ -54,14 +54,14 @@ exports.parseTime = (time, cFormat) => {
     return value.toString().padStart(2, "0");
   });
   return time_str;
-};
+}
 
 /**
  * @param {number} time
  * @param {string} option
  * @returns {string}
  */
-exports.formatTime = (time, option) => {
+export function formatTime(time, option) {
   if (("" + time).length === 10) {
     time = parseInt(time) * 1000;
   } else {
@@ -97,27 +97,13 @@ exports.formatTime = (time, option) => {
       "分"
     );
   }
-};
-
-/**
- * @param {Object} json
- * @returns {Array}
- */
-exports.param = (json) => {
-  if (!json) return "";
-  return cleanArray(
-    Object.keys(json).map((key) => {
-      if (json[key] === undefined) return "";
-      return encodeURIComponent(key) + "=" + encodeURIComponent(json[key]);
-    })
-  ).join("&");
-};
+}
 
 /**
  * @param {string} url
  * @returns {Object}
  */
-exports.param2Obj = (url) => {
+export function param2Obj(url) {
   const search = decodeURIComponent(url.split("?")[1]).replace(/\+/g, " ");
   if (!search) {
     return {};
@@ -133,4 +119,4 @@ exports.param2Obj = (url) => {
     }
   });
   return obj;
-};
+}
